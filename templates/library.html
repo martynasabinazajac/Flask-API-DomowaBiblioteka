@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Domowa biblioteka</title>
+    <style>
+        table, th, tr, td {border: 1px solid black;}
+    </style>
+</head>
+<body>
+
+<h1>Domowa biblioteka</h1>
+
+</table>
+<div>
+    <h2> Dodaj nową pozycję: </h2>
+    <form method="POST" action="/library/">
+        {{ form.hidden_tag() }}
+        <table>
+            {% for field in form if field.widget.input_type != 'hidden' %}
+                <tr>
+                    <th>{{ field.label }} {% if field.flags.required %}*{% endif %}</th>
+                    <td>{{ field }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <input type="submit" value="Go">
+    </form>
+</div>
+
+<h3>Lista książek:</h3>
+
+<table>
+    <thead>
+    <th>Tytuł</th>
+    <th>Autor</th>
+    <th>Rok publikacji</th>
+    <th>Opis</th>
+    </thead>
+{% for position in library %}
+    <tr>
+        <td><a href="/library/{{ loop.index }}">{{ position.title }}</a></td>
+        <td>{{ position.author }}</td>
+        <td>{{ position.publication }}</td>
+        <td>{{ position.description }}</td>
+    </tr>
+{% endfor %}
+</table>
+</body>
+</html>
